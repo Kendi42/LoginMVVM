@@ -15,6 +15,7 @@ import com.example.loginmvvm.data.network.Resource
 import com.example.loginmvvm.data.repository.AuthRepository
 import com.example.loginmvvm.ui.base.BaseFragment
 import com.example.loginmvvm.ui.enable
+import com.example.loginmvvm.ui.handleApiError
 import com.example.loginmvvm.ui.home.HomeActivity
 import com.example.loginmvvm.ui.startNewActivity
 import com.example.loginmvvm.ui.visible
@@ -29,21 +30,20 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
         binding.btnLogin.enable(false)
         // To observe the Login response
         viewModel.loginResponse.observe(viewLifecycleOwner, Observer {
-            binding.loginProgressBar.visible(false)
+            binding.loginProgressBar.visible(it is Resource.Loading)
             when(it){
                 is Resource.Success ->{
+                    lifecycleScope.launch {
                         viewModel.saveAuthToken(it.value.data.token!!) // Exclamation marks may cause a null point exception
                         Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
                         requireActivity().startNewActivity(HomeActivity::class.java)
+                    }
 
                 }
                 is Resource.Loading ->{
                     Log.d("Resource Loading", "Resource Loading")
                 }
-                is Resource.Failure ->{
-                    Toast.makeText(requireContext(), "Login Failed: ${it.toString()}", Toast.LENGTH_LONG).show()
-                    Log.d("API message", it.toString())
-                }
+                is Resource.Failure -> handleApiError(it){login()}
             }
         })
 
@@ -54,18 +54,18 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
         }
 
         binding.btnLogin.setOnClickListener{
-            val userName= binding.etLoginUsername.text.toString().trim()
-            Log.d("API message", "UserName: $userName")
-
-            val password= binding.etLoginPass.text.toString().trim()
-            Log.d("API message", "Password: $password")
-
-            //@todo add input validation
-            binding.loginProgressBar.visible(true)
-            viewModel.login(userName, password)
+            login()
         }
+    }
 
+    private fun login() {
+        val userName= binding.etLoginUsername.text.toString().trim()
+        Log.d("API message", "UserName: $userName")
 
+        val password= binding.etLoginPass.text.toString().trim()
+        Log.d("API message", "Password: $password")
+
+        viewModel.login(userName, password)
     }
 
     override fun getViewModel() = AuthViewModel::class.java

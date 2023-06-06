@@ -38,7 +38,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserReposi
 
         viewModel.data.observe(viewLifecycleOwner, Observer{
             when(it){
-                is Resource.Success ->{
+                        is Resource.Success ->{
                     binding.progressBarHome.visible(false)
                     updateUI(it.value.data)
                     Toast.makeText(requireContext(), "Success Home", Toast.LENGTH_SHORT).show()
@@ -50,13 +50,16 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding, UserReposi
                 }
                 is Resource.Failure -> {
                     binding.progressBarHome.visible(false)
-                    Toast.makeText(requireContext(), "Resource Failure Home", Toast.LENGTH_SHORT).show()
-                    Log.d("Resource Failure Home", "Resource Failure Home")
+                    Toast.makeText(requireContext(), "Resource Failure Home $it ", Toast.LENGTH_LONG).show()
+                    Log.d("Resource Failure Home", "Resource Failure Home  $it ")
                 }
             }
 
 
         })
+        binding.btnLogout.setOnClickListener{
+            logout()
+        }
     }
 
     private fun updateUI(data: LoginResponse.Data) {
