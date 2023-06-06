@@ -32,10 +32,13 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
             binding.loginProgressBar.visible(false)
             when(it){
                 is Resource.Success ->{
-                        viewModel.saveAuthToken(it.value.data.token)
+                        viewModel.saveAuthToken(it.value.data.token!!) // Exclamation marks may cause a null point exception
                         Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
                         requireActivity().startNewActivity(HomeActivity::class.java)
 
+                }
+                is Resource.Loading ->{
+                    Log.d("Resource Loading", "Resource Loading")
                 }
                 is Resource.Failure ->{
                     Toast.makeText(requireContext(), "Login Failed: ${it.toString()}", Toast.LENGTH_LONG).show()

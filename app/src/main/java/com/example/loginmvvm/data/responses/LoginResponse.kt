@@ -25,7 +25,7 @@ data class LoginResponse(
         @SerializedName("securityQuestionsSet")
         val securityQuestionsSet: Boolean, // true
         @SerializedName("token")
-        val token: String, // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6ImQ2NDkyODU2YTRhNGMxMDQ2ODFkZTRmM2EyZTBmOTg5MSJ9.eyJuYW1lIjoiRGFuaWVsIEtpbWFuaSIsInVzZXJuYW1lIjoiOTdNMFkxMkJOV0VKQVFQIiwiZGV2aWNlSWQiOm51bGwsImlzcyI6Imh0dHBzOlwvXC90ZXN0LWFwaS5la2VueWEuY28ua2UiLCJhdWQiOiJodHRwczpcL1wvdGVzdC1hcGkuZWtlbnlhLmNvLmtlIiwianRpIjoiZDY0OTI4NTZhNGE0YzEwNDY4MWRlNGYzYTJlMGY5ODkxIiwiaWF0IjoxNjg1OTU4NzkyLCJleHAiOjE2ODYwNDUxOTIsInVpZCI6NzI1fQ.Iu1fy1N-8aMo2ftJkvh8qt9Pscb8B42u_VWgFSv9I-g
+        val token: String?, // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImp0aSI6ImQ2NDkyODU2YTRhNGMxMDQ2ODFkZTRmM2EyZTBmOTg5MSJ9.eyJuYW1lIjoiRGFuaWVsIEtpbWFuaSIsInVzZXJuYW1lIjoiOTdNMFkxMkJOV0VKQVFQIiwiZGV2aWNlSWQiOm51bGwsImlzcyI6Imh0dHBzOlwvXC90ZXN0LWFwaS5la2VueWEuY28ua2UiLCJhdWQiOiJodHRwczpcL1wvdGVzdC1hcGkuZWtlbnlhLmNvLmtlIiwianRpIjoiZDY0OTI4NTZhNGE0YzEwNDY4MWRlNGYzYTJlMGY5ODkxIiwiaWF0IjoxNjg1OTU4NzkyLCJleHAiOjE2ODYwNDUxOTIsInVpZCI6NzI1fQ.Iu1fy1N-8aMo2ftJkvh8qt9Pscb8B42u_VWgFSv9I-g
         @SerializedName("user")
         val user: User
     ) {

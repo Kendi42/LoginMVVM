@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.example.loginmvvm.data.UserPreferences
 import com.example.loginmvvm.data.network.RemoteDataSource
 import com.example.loginmvvm.data.repository.BaseRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.util.prefs.Preferences
 
 // Every Fragment needs a ViewModel, ViewBinding, and a Repository
@@ -29,6 +32,8 @@ abstract class BaseFragment<VM: ViewModel, B: ViewBinding, R: BaseRepository>: F
         binding= getFragmentBinding(inflater, container)
         val factory = ViewModelFactory(getFragmentRepository())
         viewModel= ViewModelProvider(this, factory)[getViewModel()]
+
+        lifecycleScope.launch{userPreferences.authToken.first()}
         return binding.root
     }
 
