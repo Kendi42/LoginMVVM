@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Define the progress bar's track (background) -->
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#ffffff" />
+            <corners android:radius="12dp"/>
+        </shape>
+    </item>
+
+    <!-- Define the progress bar's progress -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <solid android:color="#FFD481" />
+                <corners android:radius="12dp"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>
