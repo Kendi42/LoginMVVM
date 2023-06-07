@@ -23,7 +23,7 @@ class SplashScreen : AppCompatActivity() {
         val userPreferences = UserPreferences(this)
 
         userPreferences.authToken.asLiveData().observe(this, Observer{
-            val activity = if(it== null) AuthActivity::class.java else HomeActivity::class.java
+            val activity = if(it== null) AuthActivity::class.java else AuthActivity::class.java
             startNewActivity(activity)
             Toast.makeText(this, it?: "Token is Null", Toast.LENGTH_SHORT).show()
 

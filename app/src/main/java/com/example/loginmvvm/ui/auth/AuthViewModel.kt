@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.loginmvvm.data.network.Resource
 import com.example.loginmvvm.data.repository.AuthRepository
+import com.example.loginmvvm.data.responses.LoginData
 import com.example.loginmvvm.data.responses.LoginResponse
 import com.example.loginmvvm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel(
-    private val repository: AuthRepository
-
-): BaseViewModel(repository) {
+class AuthViewModel @Inject constructor(private val repository: AuthRepository): BaseViewModel(repository) {
 
     private val _loginResponse :MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
     val loginResponse: LiveData<Resource<LoginResponse>>
@@ -31,6 +30,8 @@ class AuthViewModel(
         repository.saveAuthToken(token)
     }
 
+    suspend fun  saveUserData(loginData: LoginData)= repository.saveUserData(loginData)
 
+    fun getUserData() = repository.getUserData()
 
 }

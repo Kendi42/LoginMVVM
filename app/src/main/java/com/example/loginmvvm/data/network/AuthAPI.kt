@@ -7,6 +7,9 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
+// Class where functions for interacting with the API for Authentication are defined
+/*
+* It accepts a LoginRequest object as the request body and returns a LoginResponse object.*/
 interface AuthAPI {
 
     //@FormUrlEncoded
@@ -19,8 +22,5 @@ interface AuthAPI {
        // @Field("password") password: String
         @Body loginRequest: LoginRequest
     ): LoginResponse
-
-
-
 
 }

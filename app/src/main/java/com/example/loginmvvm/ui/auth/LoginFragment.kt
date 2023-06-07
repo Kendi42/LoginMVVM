@@ -9,10 +9,15 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.loginmvvm.R
+import com.example.loginmvvm.data.UserPreferences
 import com.example.loginmvvm.databinding.FragmentLoginBinding
 import com.example.loginmvvm.data.network.AuthAPI
+import com.example.loginmvvm.data.network.RemoteDataSource
 import com.example.loginmvvm.data.network.Resource
 import com.example.loginmvvm.data.repository.AuthRepository
+import com.example.loginmvvm.data.roomdb.AppDatabase
 import com.example.loginmvvm.ui.base.BaseFragment
 import com.example.loginmvvm.ui.enable
 import com.example.loginmvvm.ui.handleApiError
@@ -28,15 +33,25 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
 
         binding.loginProgressBar.visible(false)
         binding.btnLogin.enable(false)
+
         // To observe the Login response
         viewModel.loginResponse.observe(viewLifecycleOwner, Observer {
             binding.loginProgressBar.visible(it is Resource.Loading)
             when(it){
                 is Resource.Success ->{
-                    lifecycleScope.launch {
-                        viewModel.saveAuthToken(it.value.data.token!!) // Exclamation marks may cause a null point exception
-                        Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
-                        requireActivity().startNewActivity(HomeActivity::class.java)
+                    val response = it.value
+                    if(response.status == 1){
+                        lifecycleScope.launch {
+                            // Save Token and AL  response data
+                            viewModel.saveAuthToken(response.data.token!!) // Exclamation marks may cause a null point exception
+                            viewModel.saveUserData(response.data)
+                            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+                            /*requireActivity().startNewActivity(HomeActivity::class.java)*/
+                            findNavController().navigate(R.id.action_loginFragment_to_homeFragment2)
+                        }
+
+                    }else{
+
                     }
 
                 }
@@ -74,7 +89,7 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
         container: ViewGroup?
     ) = FragmentLoginBinding.inflate(inflater, container, false)
 
-    override fun getFragmentRepository() = AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java), userPreferences)
+    override fun getFragmentRepository() = AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java), userPreferences,AppDatabase(requireContext()))
 
 
 }
