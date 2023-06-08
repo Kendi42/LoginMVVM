@@ -11,6 +11,8 @@ import retrofit2.http.POST
 /*
 * It accepts a LoginRequest object as the request body and returns a LoginResponse object.*/
 interface AuthAPI {
+    // Since its an interface we cant directly instantiate an interface for dependency injection
+    //When in situations like this, one needs to create a module to construct the dependecies that are not possible to inject
 
     //@FormUrlEncoded
     // Defining the URL end point

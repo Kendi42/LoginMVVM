@@ -9,7 +9,8 @@ import com.example.loginmvvm.data.roomdb.UserDataDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AuthRepository (private val api: AuthAPI, private val preferences: UserPreferences, private val appDatabase: AppDatabase): BaseRepository() {
+
+class AuthRepository @Inject constructor(private val api: AuthAPI, private val preferences: UserPreferences, private val appDatabase: AppDatabase): BaseRepository() {
 
     suspend fun login(username: String, password: String) = safeApiCall {
         api.login(LoginRequest(username=username, password=password)) // named arguments

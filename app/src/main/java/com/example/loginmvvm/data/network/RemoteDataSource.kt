@@ -1,5 +1,6 @@
 package com.example.loginmvvm.data.network
 
+import android.content.Context
 import com.example.loginmvvm.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,14 +9,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 
-class RemoteDataSource {
+class RemoteDataSource @Inject constructor() {
 
     companion object{
         private const val BASE_URL= "https://test-api.ekenya.co.ke/moneymart-api/api/"
     }
     fun <Api> buildApi(
         api: Class<Api>,
-        authToken: String? = null
+        authToken: String? = null,
     ): Api{
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
