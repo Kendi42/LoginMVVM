@@ -12,7 +12,7 @@ import com.example.loginmvvm.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class AuthViewModel @Inject constructor(private val repository: AuthRepository): BaseViewModel(repository) {
+class AuthViewModel (private val repository: AuthRepository): BaseViewModel(repository) {
 
     private val _loginResponse :MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
     val loginResponse: LiveData<Resource<LoginResponse>>

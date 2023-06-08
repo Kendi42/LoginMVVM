@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 
-class RemoteDataSource @Inject constructor() {
+class RemoteDataSource {
 
     companion object{
         private const val BASE_URL= "https://test-api.ekenya.co.ke/moneymart-api/api/"
