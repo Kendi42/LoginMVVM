@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.loginmvvm.R
 
+
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -25,5 +25,4 @@ class HomeViewModel (
         //_data.value= repository.getData()
     }
 
-    fun getUserData() = repository.getUserData()
 }

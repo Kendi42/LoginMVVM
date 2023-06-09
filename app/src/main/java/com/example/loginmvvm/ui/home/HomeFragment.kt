@@ -20,24 +20,11 @@ class HomeFragment : BaseFragment<AuthViewModel, FragmentHomeBinding, AuthReposi
         super.onViewCreated(view, savedInstanceState)
 
         binding.progressBarHome.visible(false)
-
-        lifecycleScope.launch {
-            viewModel.getUserData().collect {
-                updateUI(it)
-            }
-        }
         binding.btnLogout.setOnClickListener {
             logout()
         }
     }
 
-    private fun updateUI(data: LoginData) {
-        with(binding) {
-            tvId.text = data.user.idNumber
-            tvName.text = data.user.name
-            tvEmail.text = data.user.email
-        }
-    }
 
     /*override fun getViewModel() = HomeViewModel::class.java
 
@@ -61,7 +48,6 @@ class HomeFragment : BaseFragment<AuthViewModel, FragmentHomeBinding, AuthReposi
 
     override fun getFragmentRepository() = AuthRepository(
         remoteDataSource.buildApi(AuthAPI::class.java), userPreferences,
-        AppDatabase(requireContext())
     )
 
 
