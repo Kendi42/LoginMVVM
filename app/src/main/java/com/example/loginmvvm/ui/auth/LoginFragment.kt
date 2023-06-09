@@ -1,41 +1,45 @@
 package com.example.loginmvvm.ui.auth
 
-import android.nfc.Tag
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.loginmvvm.R
-import com.example.loginmvvm.data.UserPreferences
 import com.example.loginmvvm.databinding.FragmentLoginBinding
-import com.example.loginmvvm.data.network.AuthAPI
-import com.example.loginmvvm.data.network.RemoteDataSource
 import com.example.loginmvvm.data.network.Resource
-import com.example.loginmvvm.data.repository.AuthRepository
-import com.example.loginmvvm.data.roomdb.AppDatabase
-import com.example.loginmvvm.ui.base.BaseFragment
 import com.example.loginmvvm.ui.enable
 import com.example.loginmvvm.ui.handleApiError
-import com.example.loginmvvm.ui.home.HomeActivity
-import com.example.loginmvvm.ui.startNewActivity
 import com.example.loginmvvm.ui.visible
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepository>() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
+    private lateinit var binding:FragmentLoginBinding
+    @Inject lateinit var viewModel: AuthViewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding= FragmentLoginBinding.bind(view)
 
         binding.loginProgressBar.visible(false)
         binding.btnLogin.enable(false)
 
         // To observe the Login response
-        viewModel.loginResponse.observe(viewLifecycleOwner, Observer {
+        viewModel?.loginResponse?.observe(viewLifecycleOwner, Observer {
             binding.loginProgressBar.visible(it is Resource.Loading)
             when(it){
                 is Resource.Success ->{
@@ -44,7 +48,6 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
                         lifecycleScope.launch {
                             // Save Token and AL  response data
                             viewModel.saveAuthToken(response.data.token!!) // Exclamation marks may cause a null point exception
-                            viewModel.saveUserData(response.data)
                             Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
                             /*requireActivity().startNewActivity(HomeActivity::class.java)*/
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment2)
@@ -83,13 +86,13 @@ class LoginFragment : BaseFragment<AuthViewModel, FragmentLoginBinding, AuthRepo
         viewModel.login(userName, password)
     }
 
-    override fun getViewModel() = AuthViewModel::class.java
-    override fun getFragmentBinding(
-        inflater: LayoutInflater,
-        container: ViewGroup?
-    ) = FragmentLoginBinding.inflate(inflater, container, false)
-
-    override fun getFragmentRepository() = AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java), userPreferences,AppDatabase(requireContext()))
+//    override fun getViewModel() = AuthViewModel::class.java
+//    override fun getFragmentBinding(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?
+//    ) = FragmentLoginBinding.inflate(inflater, container, false)
+//
+//    override fun getFragmentRepository() = AuthRepository(remoteDataSource.buildApi(AuthAPI::class.java), userPreferences,AppDatabase(requireContext()))
 
 
 }

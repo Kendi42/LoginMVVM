@@ -1,33 +1,18 @@
 package com.example.loginmvvm.ui.home
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.example.loginmvvm.R
 import com.example.loginmvvm.data.network.AuthAPI
-import com.example.loginmvvm.data.network.Resource
-import com.example.loginmvvm.data.network.UserApi
 import com.example.loginmvvm.data.repository.AuthRepository
-import com.example.loginmvvm.data.repository.UserRepository
 import com.example.loginmvvm.data.responses.LoginData
-import com.example.loginmvvm.data.responses.LoginResponse
-import com.example.loginmvvm.data.roomdb.AppDatabase
 import com.example.loginmvvm.databinding.FragmentHomeBinding
-import com.example.loginmvvm.databinding.FragmentLoginBinding
 import com.example.loginmvvm.ui.auth.AuthViewModel
 import com.example.loginmvvm.ui.base.BaseFragment
-import com.example.loginmvvm.ui.enable
 import com.example.loginmvvm.ui.visible
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class HomeFragment : BaseFragment<AuthViewModel, FragmentHomeBinding, AuthRepository>() {
     //
