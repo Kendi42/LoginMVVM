@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.loginmvvm.data.network.AuthAPI
 import com.example.loginmvvm.data.repository.AuthRepository
 import com.example.loginmvvm.data.responses.LoginData
+import com.example.loginmvvm.data.roomdb.AppDatabase
 import com.example.loginmvvm.databinding.FragmentHomeBinding
 import com.example.loginmvvm.ui.auth.AuthViewModel
 import com.example.loginmvvm.ui.base.BaseFragment
@@ -20,8 +21,22 @@ class HomeFragment : BaseFragment<AuthViewModel, FragmentHomeBinding, AuthReposi
         super.onViewCreated(view, savedInstanceState)
 
         binding.progressBarHome.visible(false)
+
+        lifecycleScope.launch {
+            viewModel.getUserData().collect {
+                updateUI(it)
+            }
+        }
         binding.btnLogout.setOnClickListener {
             logout()
+        }
+    }
+
+    private fun updateUI(data: LoginData) {
+        with(binding) {
+            tvId.text = data.user.idNumber
+            tvName.text = data.user.name
+            tvEmail.text = data.user.email
         }
     }
 
@@ -48,6 +63,7 @@ class HomeFragment : BaseFragment<AuthViewModel, FragmentHomeBinding, AuthReposi
 
     override fun getFragmentRepository() = AuthRepository(
         remoteDataSource.buildApi(AuthAPI::class.java), userPreferences,
+        AppDatabase(requireContext())
     )
 
 

@@ -47,6 +47,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         lifecycleScope.launch {
                             // Save Token and AL  response data
                             viewModel.saveAuthToken(response.data.token!!) // Exclamation marks may cause a null point exception
+                            viewModel.saveUserData(response.data)
                             Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
                             /*requireActivity().startNewActivity(HomeActivity::class.java)*/
                             findNavController().navigate(R.id.action_loginFragment_to_homeFragment2)

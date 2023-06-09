@@ -31,6 +31,12 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository):
         repository.saveAuthToken(token)
     }
 
+    suspend fun  saveUserData(loginData: LoginData)= repository.saveUserData(loginData)
+
+    fun getUserData() = repository.getUserData()
+
+
+
 
 
 }

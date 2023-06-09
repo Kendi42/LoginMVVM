@@ -4,6 +4,8 @@ package com.example.loginmvvm.data.responses
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import com.example.loginmvvm.data.roomdb.ROOM_DB_CURRENT_USER_ID
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
@@ -35,6 +37,9 @@ data class LoginData(
     @Embedded(prefix = "userdata_")
     val user: UserData
 ) {
+
+    @PrimaryKey(autoGenerate = false)
+    var uid = ROOM_DB_CURRENT_USER_ID
 
     @SerializedName("token")
     @Ignore

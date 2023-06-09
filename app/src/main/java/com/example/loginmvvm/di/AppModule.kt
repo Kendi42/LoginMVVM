@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.loginmvvm.data.UserPreferences
 import com.example.loginmvvm.data.network.AuthAPI
 import com.example.loginmvvm.data.network.RemoteDataSource
+import com.example.loginmvvm.data.roomdb.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -28,11 +29,11 @@ class AppModule(
         return UserPreferences(context)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideAppDatabase(): AppDatabase{
-//        return AppDatabase(context)
-//    }
+    @Singleton
+    @Provides
+    fun provideAppDatabase(): AppDatabase {
+        return AppDatabase(context)
+    }
 
 
 
