@@ -23,7 +23,6 @@ import javax.inject.Inject
 class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var binding:FragmentLoginBinding
     @Inject lateinit var viewModel: AuthViewModel
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)

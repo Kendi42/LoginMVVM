@@ -28,6 +28,12 @@ class AppModule(
         return UserPreferences(context)
     }
 
+//    @Singleton
+//    @Provides
+//    fun provideAppDatabase(): AppDatabase{
+//        return AppDatabase(context)
+//    }
+
 
 
 }
