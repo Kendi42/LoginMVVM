@@ -13,8 +13,10 @@ import com.example.loginmvvm.databinding.FragmentHomeBinding
 import com.example.loginmvvm.ui.auth.AuthViewModel
 import com.example.loginmvvm.ui.base.BaseFragment
 import com.example.loginmvvm.ui.visible
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<AuthViewModel, FragmentHomeBinding, AuthRepository>() {
     //
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

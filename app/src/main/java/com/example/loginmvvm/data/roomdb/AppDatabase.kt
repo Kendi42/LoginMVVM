@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.loginmvvm.data.responses.LoginData
 import com.example.loginmvvm.data.responses.UserData
+import javax.inject.Inject
 
 @Database(
     entities = [

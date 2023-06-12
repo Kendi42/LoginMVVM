@@ -9,10 +9,12 @@ import com.example.loginmvvm.data.repository.AuthRepository
 import com.example.loginmvvm.data.responses.LoginData
 import com.example.loginmvvm.data.responses.LoginResponse
 import com.example.loginmvvm.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+@HiltViewModel
 class AuthViewModel @Inject constructor(private val repository: AuthRepository): BaseViewModel(repository) {
 
     private val _loginResponse :MutableLiveData<Resource<LoginResponse>> = MutableLiveData()

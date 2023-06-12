@@ -7,31 +7,31 @@ import com.example.loginmvvm.data.network.RemoteDataSource
 import com.example.loginmvvm.data.roomdb.AppDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-class AppModule(
-    private val context: Context
-
-) {
-    // Needs to build the interfaces Auth API and UserInterfaces
-
-    @Singleton
+@InstallIn(SingletonComponent::class)
+object AppModule{
+//    // Needs to build the interfaces Auth API and UserInterfaces
+//
+//    @Singleton
     @Provides
     fun provideAuthApi(remoteDataSource: RemoteDataSource): AuthAPI{
         return remoteDataSource.buildApi(AuthAPI::class.java)
     }
-
-
-    @Singleton
+//
+//    @Singleton
+//    @Provides
+//    fun provideUserPreferences(): UserPreferences{
+//        return UserPreferences(context)
+//    }
+//
+//    @Singleton
     @Provides
-    fun provideUserPreferences(): UserPreferences{
-        return UserPreferences(context)
-    }
-
-    @Singleton
-    @Provides
-    fun provideAppDatabase(): AppDatabase {
+    fun provideAppDatabase(@ApplicationContext context:Context): AppDatabase {
         return AppDatabase(context)
     }
 
